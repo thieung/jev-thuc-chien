@@ -1,0 +1,184 @@
+{
+  "summary": {
+    "experiment": "criteria",
+    "badCorrect": "11/12",
+    "goodCorrect": "12/12"
+  },
+  "rows": [
+    {
+      "id": "m01",
+      "msg": "Dừng lại đi, đừng chạy migration nữa",
+      "expected": true,
+      "bad": {
+        "p": 0.96,
+        "decision": true,
+        "status": 200
+      },
+      "good": {
+        "p": 0.86,
+        "decision": true
+      }
+    },
+    {
+      "id": "m02",
+      "msg": "Khoan, hủy task này giúp mình",
+      "expected": true,
+      "bad": {
+        "p": 0.97,
+        "decision": true,
+        "status": 200
+      },
+      "good": {
+        "p": 0.96,
+        "decision": true
+      }
+    },
+    {
+      "id": "m03",
+      "msg": "stop, I changed my mind, abort",
+      "expected": true,
+      "bad": {
+        "p": 0.98,
+        "decision": true,
+        "status": 200
+      },
+      "good": {
+        "p": 0.98,
+        "decision": true
+      }
+    },
+    {
+      "id": "m04",
+      "msg": "Thôi bỏ đi, không cần làm nữa",
+      "expected": true,
+      "bad": {
+        "p": 0.96,
+        "decision": true,
+        "status": 200
+      },
+      "good": {
+        "p": 0.97,
+        "decision": true
+      }
+    },
+    {
+      "id": "m05",
+      "msg": "Đừng dừng, cứ làm tiếp nhé",
+      "expected": false,
+      "bad": {
+        "p": 0.03,
+        "decision": false,
+        "status": 200
+      },
+      "good": {
+        "p": 0.01,
+        "decision": false
+      }
+    },
+    {
+      "id": "m06",
+      "msg": "Stop asking me questions and just finish it",
+      "expected": false,
+      "bad": {
+        "p": 0.2,
+        "decision": false,
+        "status": 200
+      },
+      "good": {
+        "p": 0.06,
+        "decision": false
+      }
+    },
+    {
+      "id": "m07",
+      "msg": "Bỏ phần test e2e ra, còn lại làm tiếp",
+      "expected": false,
+      "bad": {
+        "p": 0.39,
+        "decision": false,
+        "status": 200
+      },
+      "good": {
+        "p": 0.08,
+        "decision": false
+      }
+    },
+    {
+      "id": "m08",
+      "msg": "Hủy cái cron job cũ trong code luôn nhé",
+      "expected": false,
+      "bad": {
+        "p": 0.7,
+        "decision": true,
+        "status": 200
+      },
+      "good": {
+        "p": 0.09,
+        "decision": false
+      }
+    },
+    {
+      "id": "m09",
+      "msg": "Xong chưa em?",
+      "expected": false,
+      "bad": {
+        "p": 0.14,
+        "decision": false,
+        "status": 200
+      },
+      "good": {
+        "p": 0.04,
+        "decision": false
+      }
+    },
+    {
+      "id": "m10",
+      "msg": "Cancel culture is wild lol, anyway how is it going?",
+      "expected": false,
+      "bad": {
+        "p": 0.1,
+        "decision": false,
+        "status": 200
+      },
+      "good": {
+        "p": 0.04,
+        "decision": false
+      }
+    },
+    {
+      "id": "m11",
+      "msg": "Ngừng lại một chút, giải thích bước vừa rồi trước đã",
+      "expected": false,
+      "bad": {
+        "p": 0.2,
+        "decision": false,
+        "status": 200
+      },
+      "good": {
+        "p": 0.1,
+        "decision": false
+      }
+    },
+    {
+      "id": "m12",
+      "msg": "cancel",
+      "expected": true,
+      "bad": {
+        "p": 0.97,
+        "decision": true,
+        "status": 200
+      },
+      "good": {
+        "p": 0.91,
+        "decision": true
+      }
+    },
+    {
+      "id": "probe-no-criteria-no-instructions",
+      "status": 400,
+      "error": {
+        "detail": "Noul question must have criteria or instructions: q"
+      }
+    }
+  ]
+}

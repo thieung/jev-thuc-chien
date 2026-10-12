@@ -1,0 +1,149 @@
+{
+  "summary": {
+    "experiment": "dates",
+    "badCorrect": "9/10",
+    "goodCorrect": "10/10"
+  },
+  "rows": [
+    {
+      "id": "d01",
+      "raw": "2026-10-09",
+      "trueDays": 2,
+      "expected": true,
+      "bad": {
+        "p": 0.97,
+        "decision": true
+      },
+      "good": {
+        "days": 2,
+        "decision": true
+      }
+    },
+    {
+      "id": "d02",
+      "raw": "Oct 6, 2026",
+      "trueDays": 5,
+      "expected": true,
+      "bad": {
+        "p": 0.92,
+        "decision": true
+      },
+      "good": {
+        "days": 5,
+        "decision": true
+      }
+    },
+    {
+      "id": "d03",
+      "raw": "05/10/2026",
+      "trueDays": 6,
+      "expected": true,
+      "bad": {
+        "p": 0.39,
+        "decision": false
+      },
+      "good": {
+        "days": 6,
+        "decision": true
+      }
+    },
+    {
+      "id": "d04",
+      "raw": "2026-10-03",
+      "trueDays": 8,
+      "expected": false,
+      "bad": {
+        "p": 0.16,
+        "decision": false
+      },
+      "good": {
+        "days": 8,
+        "decision": false
+      }
+    },
+    {
+      "id": "d05",
+      "raw": "02/10/2026",
+      "trueDays": 9,
+      "expected": false,
+      "bad": {
+        "p": 0.22,
+        "decision": false
+      },
+      "good": {
+        "days": 9,
+        "decision": false
+      }
+    },
+    {
+      "id": "d06",
+      "raw": "Sep 29, 2026",
+      "trueDays": 12,
+      "expected": false,
+      "bad": {
+        "p": 0.04,
+        "decision": false
+      },
+      "good": {
+        "days": 12,
+        "decision": false
+      }
+    },
+    {
+      "id": "d07",
+      "raw": "2026-09-11",
+      "trueDays": 30,
+      "expected": false,
+      "bad": {
+        "p": 0.01,
+        "decision": false
+      },
+      "good": {
+        "days": 30,
+        "decision": false
+      }
+    },
+    {
+      "id": "d08",
+      "raw": "10/10/2026",
+      "trueDays": 1,
+      "expected": true,
+      "bad": {
+        "p": 0.9,
+        "decision": true
+      },
+      "good": {
+        "days": 1,
+        "decision": true
+      }
+    },
+    {
+      "id": "d09",
+      "raw": "October 1, 2026",
+      "trueDays": 10,
+      "expected": false,
+      "bad": {
+        "p": 0.03,
+        "decision": false
+      },
+      "good": {
+        "days": 10,
+        "decision": false
+      }
+    },
+    {
+      "id": "d10",
+      "raw": "2026-10-07",
+      "trueDays": 4,
+      "expected": true,
+      "bad": {
+        "p": 0.96,
+        "decision": true
+      },
+      "good": {
+        "days": 4,
+        "decision": true
+      }
+    }
+  ]
+}

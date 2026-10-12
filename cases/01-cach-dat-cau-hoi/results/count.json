@@ -1,0 +1,213 @@
+{
+  "summary": {
+    "experiment": "count",
+    "badCorrect": "11/12",
+    "goodCorrect": "12/12"
+  },
+  "rows": [
+    {
+      "id": "list-1",
+      "bugCount": 2,
+      "expected": false,
+      "bad": {
+        "p": 0.1,
+        "decision": false,
+        "tokens": 390,
+        "ms": 606
+      },
+      "good": {
+        "counted": 2,
+        "decision": false,
+        "tokens": 733,
+        "ms": 255
+      }
+    },
+    {
+      "id": "list-2",
+      "bugCount": 3,
+      "expected": false,
+      "bad": {
+        "p": 0.59,
+        "decision": true,
+        "tokens": 394,
+        "ms": 271
+      },
+      "good": {
+        "counted": 3,
+        "decision": false,
+        "tokens": 794,
+        "ms": 233
+      }
+    },
+    {
+      "id": "list-3",
+      "bugCount": 4,
+      "expected": true,
+      "bad": {
+        "p": 0.94,
+        "decision": true,
+        "tokens": 416,
+        "ms": 242
+      },
+      "good": {
+        "counted": 4,
+        "decision": true,
+        "tokens": 893,
+        "ms": 219
+      }
+    },
+    {
+      "id": "list-4",
+      "bugCount": 5,
+      "expected": true,
+      "bad": {
+        "p": 0.93,
+        "decision": true,
+        "tokens": 393,
+        "ms": 297
+      },
+      "good": {
+        "counted": 5,
+        "decision": true,
+        "tokens": 738,
+        "ms": 236
+      }
+    },
+    {
+      "id": "list-5",
+      "bugCount": 3,
+      "expected": false,
+      "bad": {
+        "p": 0.37,
+        "decision": false,
+        "tokens": 405,
+        "ms": 291
+      },
+      "good": {
+        "counted": 3,
+        "decision": false,
+        "tokens": 817,
+        "ms": 233
+      }
+    },
+    {
+      "id": "list-6",
+      "bugCount": 4,
+      "expected": true,
+      "bad": {
+        "p": 0.96,
+        "decision": true,
+        "tokens": 416,
+        "ms": 284
+      },
+      "good": {
+        "counted": 4,
+        "decision": true,
+        "tokens": 893,
+        "ms": 227
+      }
+    },
+    {
+      "id": "list-7",
+      "bugCount": 1,
+      "expected": false,
+      "bad": {
+        "p": 0.06,
+        "decision": false,
+        "tokens": 387,
+        "ms": 296
+      },
+      "good": {
+        "counted": 1,
+        "decision": false,
+        "tokens": 727,
+        "ms": 237
+      }
+    },
+    {
+      "id": "list-8",
+      "bugCount": 6,
+      "expected": true,
+      "bad": {
+        "p": 0.97,
+        "decision": true,
+        "tokens": 409,
+        "ms": 287
+      },
+      "good": {
+        "counted": 6,
+        "decision": true,
+        "tokens": 824,
+        "ms": 242
+      }
+    },
+    {
+      "id": "list-9",
+      "bugCount": 3,
+      "expected": false,
+      "bad": {
+        "p": 0.21,
+        "decision": false,
+        "tokens": 416,
+        "ms": 282
+      },
+      "good": {
+        "counted": 3,
+        "decision": false,
+        "tokens": 892,
+        "ms": 251
+      }
+    },
+    {
+      "id": "list-10",
+      "bugCount": 4,
+      "expected": true,
+      "bad": {
+        "p": 0.96,
+        "decision": true,
+        "tokens": 387,
+        "ms": 272
+      },
+      "good": {
+        "counted": 4,
+        "decision": true,
+        "tokens": 726,
+        "ms": 523
+      }
+    },
+    {
+      "id": "list-11",
+      "bugCount": 2,
+      "expected": false,
+      "bad": {
+        "p": 0.1,
+        "decision": false,
+        "tokens": 404,
+        "ms": 243
+      },
+      "good": {
+        "counted": 2,
+        "decision": false,
+        "tokens": 815,
+        "ms": 288
+      }
+    },
+    {
+      "id": "list-12",
+      "bugCount": 5,
+      "expected": true,
+      "bad": {
+        "p": 0.97,
+        "decision": true,
+        "tokens": 420,
+        "ms": 273
+      },
+      "good": {
+        "counted": 5,
+        "decision": true,
+        "tokens": 901,
+        "ms": 251
+      }
+    }
+  ]
+}

@@ -1,0 +1,249 @@
+{
+  "summary": {
+    "experiment": "compound",
+    "badCorrect": "16/16",
+    "goodCorrect": "16/16"
+  },
+  "rows": [
+    {
+      "id": "p01",
+      "onTopic": true,
+      "specific": true,
+      "expected": true,
+      "bad": {
+        "p": 0.87,
+        "decision": true
+      },
+      "good": {
+        "onTopic": 0.95,
+        "specific": 0.54,
+        "decision": true
+      }
+    },
+    {
+      "id": "p02",
+      "onTopic": true,
+      "specific": true,
+      "expected": true,
+      "bad": {
+        "p": 0.89,
+        "decision": true
+      },
+      "good": {
+        "onTopic": 0.94,
+        "specific": 0.92,
+        "decision": true
+      }
+    },
+    {
+      "id": "p03",
+      "onTopic": true,
+      "specific": true,
+      "expected": true,
+      "bad": {
+        "p": 0.87,
+        "decision": true
+      },
+      "good": {
+        "onTopic": 0.95,
+        "specific": 0.69,
+        "decision": true
+      }
+    },
+    {
+      "id": "p04",
+      "onTopic": true,
+      "specific": true,
+      "expected": true,
+      "bad": {
+        "p": 0.86,
+        "decision": true
+      },
+      "good": {
+        "onTopic": 0.92,
+        "specific": 0.69,
+        "decision": true
+      }
+    },
+    {
+      "id": "p05",
+      "onTopic": true,
+      "specific": false,
+      "expected": false,
+      "bad": {
+        "p": 0.11,
+        "decision": false
+      },
+      "good": {
+        "onTopic": 0.21,
+        "specific": 0.02,
+        "decision": false
+      }
+    },
+    {
+      "id": "p06",
+      "onTopic": true,
+      "specific": false,
+      "expected": false,
+      "bad": {
+        "p": 0.09,
+        "decision": false
+      },
+      "good": {
+        "onTopic": 0.13,
+        "specific": 0.01,
+        "decision": false
+      }
+    },
+    {
+      "id": "p07",
+      "onTopic": true,
+      "specific": false,
+      "expected": false,
+      "bad": {
+        "p": 0.16,
+        "decision": false
+      },
+      "good": {
+        "onTopic": 0.21,
+        "specific": 0.04,
+        "decision": false
+      }
+    },
+    {
+      "id": "p08",
+      "onTopic": true,
+      "specific": false,
+      "expected": false,
+      "bad": {
+        "p": 0.18,
+        "decision": false
+      },
+      "good": {
+        "onTopic": 0.52,
+        "specific": 0.01,
+        "decision": false
+      }
+    },
+    {
+      "id": "p09",
+      "onTopic": false,
+      "specific": true,
+      "expected": false,
+      "bad": {
+        "p": 0.03,
+        "decision": false
+      },
+      "good": {
+        "onTopic": 0.01,
+        "specific": 0.95,
+        "decision": false
+      }
+    },
+    {
+      "id": "p10",
+      "onTopic": false,
+      "specific": true,
+      "expected": false,
+      "bad": {
+        "p": 0.02,
+        "decision": false
+      },
+      "good": {
+        "onTopic": 0.01,
+        "specific": 0.98,
+        "decision": false
+      }
+    },
+    {
+      "id": "p11",
+      "onTopic": false,
+      "specific": true,
+      "expected": false,
+      "bad": {
+        "p": 0.29,
+        "decision": false
+      },
+      "good": {
+        "onTopic": 0.08,
+        "specific": 0.86,
+        "decision": false
+      }
+    },
+    {
+      "id": "p12",
+      "onTopic": false,
+      "specific": true,
+      "expected": false,
+      "bad": {
+        "p": 0.04,
+        "decision": false
+      },
+      "good": {
+        "onTopic": 0.01,
+        "specific": 0.96,
+        "decision": false
+      }
+    },
+    {
+      "id": "p13",
+      "onTopic": false,
+      "specific": false,
+      "expected": false,
+      "bad": {
+        "p": 0.02,
+        "decision": false
+      },
+      "good": {
+        "onTopic": 0.01,
+        "specific": 0.01,
+        "decision": false
+      }
+    },
+    {
+      "id": "p14",
+      "onTopic": false,
+      "specific": false,
+      "expected": false,
+      "bad": {
+        "p": 0.08,
+        "decision": false
+      },
+      "good": {
+        "onTopic": 0.04,
+        "specific": 0.22,
+        "decision": false
+      }
+    },
+    {
+      "id": "p15",
+      "onTopic": false,
+      "specific": false,
+      "expected": false,
+      "bad": {
+        "p": 0.05,
+        "decision": false
+      },
+      "good": {
+        "onTopic": 0.03,
+        "specific": 0.01,
+        "decision": false
+      }
+    },
+    {
+      "id": "p16",
+      "onTopic": false,
+      "specific": false,
+      "expected": false,
+      "bad": {
+        "p": 0.02,
+        "decision": false
+      },
+      "good": {
+        "onTopic": 0.01,
+        "specific": 0.01,
+        "decision": false
+      }
+    }
+  ]
+}
