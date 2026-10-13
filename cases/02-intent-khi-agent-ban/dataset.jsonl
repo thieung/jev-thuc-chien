@@ -1,0 +1,40 @@
+{"id": "s01", "task": "Refactor module auth sang JWT và viết lại test cho login", "message": "đang làm tới đâu rồi?", "expected": "status_query", "tags": ["vi"]}
+{"id": "s02", "task": "Viết bài blog so sánh Postgres và MySQL cho subscribers", "message": "bao giờ xong em?", "expected": "status_query", "tags": ["vi"]}
+{"id": "s03", "task": "Fix bug thanh toán: user bị trừ tiền 2 lần khi bấm nút Pay nhanh", "message": "what's the status?", "expected": "status_query", "tags": ["en"]}
+{"id": "s04", "task": "Migrate CI từ Jenkins sang GitHub Actions", "message": "?", "expected": "status_query", "tags": ["fast-path"]}
+{"id": "s05", "task": "Refactor module auth sang JWT và viết lại test cho login", "message": "chạy test pass chưa?", "expected": "status_query", "tags": ["vi", "boundary"]}
+{"id": "s06", "task": "Fix bug thanh toán: user bị trừ tiền 2 lần khi bấm nút Pay nhanh", "message": "tìm ra nguyên nhân chưa hay vẫn đang đọc log?", "expected": "status_query", "tags": ["vi"]}
+{"id": "s07", "task": "Viết bài blog so sánh Postgres và MySQL cho subscribers", "message": "how far along are you? just curious", "expected": "status_query", "tags": ["en"]}
+{"id": "s08", "task": "Migrate CI từ Jenkins sang GitHub Actions", "message": "còn bao nhiêu job chưa chuyển?", "expected": "status_query", "tags": ["vi", "boundary"]}
+{"id": "c01", "task": "Refactor module auth sang JWT và viết lại test cho login", "message": "dừng lại", "expected": "cancel", "tags": ["fast-path", "vi"]}
+{"id": "c02", "task": "Viết bài blog so sánh Postgres và MySQL cho subscribers", "message": "thôi khỏi viết nữa, anh tự viết", "expected": "cancel", "tags": ["vi"]}
+{"id": "c03", "task": "Fix bug thanh toán: user bị trừ tiền 2 lần khi bấm nút Pay nhanh", "message": "stop, I'll handle it myself", "expected": "cancel", "tags": ["en"]}
+{"id": "c04", "task": "Migrate CI từ Jenkins sang GitHub Actions", "message": "hủy task này đi, sếp đổi ý rồi không migrate nữa", "expected": "cancel", "tags": ["vi"]}
+{"id": "c05", "task": "Refactor module auth sang JWT và viết lại test cho login", "message": "nevermind", "expected": "cancel", "tags": ["fast-path", "en"]}
+{"id": "c06", "task": "Viết bài blog so sánh Postgres và MySQL cho subscribers", "message": "Khoan, ngừng hết lại, đừng làm gì thêm", "expected": "cancel", "tags": ["vi"]}
+{"id": "c07", "task": "Fix bug thanh toán: user bị trừ tiền 2 lần khi bấm nút Pay nhanh", "message": "abort everything, prod is on fire, I need you elsewhere", "expected": "cancel", "tags": ["en", "boundary"]}
+{"id": "c08", "task": "Migrate CI từ Jenkins sang GitHub Actions", "message": "Bỏ đi em, không cần nữa", "expected": "cancel", "tags": ["vi"]}
+{"id": "t01", "task": "Refactor module auth sang JWT và viết lại test cho login", "message": "dừng ở bước 3", "expected": "steer", "tags": ["fast-path-trap", "vi"]}
+{"id": "t02", "task": "Refactor module auth sang JWT và viết lại test cho login", "message": "nhớ dùng thư viện jose chứ đừng dùng jsonwebtoken nhé", "expected": "steer", "tags": ["vi"]}
+{"id": "t03", "task": "Viết bài blog so sánh Postgres và MySQL cho subscribers", "message": "thêm phần benchmark insert 1 triệu dòng nữa", "expected": "steer", "tags": ["vi"]}
+{"id": "t04", "task": "Fix bug thanh toán: user bị trừ tiền 2 lần khi bấm nút Pay nhanh", "message": "focus on the idempotency key first, skip the UI part", "expected": "steer", "tags": ["en"]}
+{"id": "t05", "task": "Migrate CI từ Jenkins sang GitHub Actions", "message": "làm phần build trước, deploy để sau", "expected": "steer", "tags": ["vi", "boundary"]}
+{"id": "t06", "task": "Viết bài blog so sánh Postgres và MySQL cho subscribers", "message": "viết giọng thân mật hơn, bớt học thuật", "expected": "steer", "tags": ["vi"]}
+{"id": "t07", "task": "Refactor module auth sang JWT và viết lại test cho login", "message": "thôi khỏi viết test e2e, unit test là đủ", "expected": "steer", "tags": ["vi", "boundary"]}
+{"id": "t08", "task": "Fix bug thanh toán: user bị trừ tiền 2 lần khi bấm nút Pay nhanh", "message": "also add a regression test for the double click", "expected": "steer", "tags": ["en"]}
+{"id": "t09", "task": "Migrate CI từ Jenkins sang GitHub Actions", "message": "đổi runner sang ubuntu-24.04 luôn", "expected": "steer", "tags": ["vi"]}
+{"id": "t10", "task": "Viết bài blog so sánh Postgres và MySQL cho subscribers", "message": "bỏ phần MySQL 5.7 đi, chỉ so bản 8", "expected": "steer", "tags": ["vi", "boundary"]}
+{"id": "t11", "task": "Refactor module auth sang JWT và viết lại test cho login", "message": "làm phần đó trước", "expected": "steer", "tags": ["vi", "needs-context"]}
+{"id": "t12", "task": "Fix bug thanh toán: user bị trừ tiền 2 lần khi bấm nút Pay nhanh", "message": "cái log anh gửi lúc nãy là của staging nha, đừng nhầm", "expected": "steer", "tags": ["vi"]}
+{"id": "n01", "task": "Refactor module auth sang JWT và viết lại test cho login", "message": "nhân tiện viết giúp anh email xin nghỉ phép thứ 6", "expected": "new_task", "tags": ["vi"]}
+{"id": "n02", "task": "Viết bài blog so sánh Postgres và MySQL cho subscribers", "message": "tra giúp anh giá vé máy bay Hà Nội - Đà Nẵng tuần sau", "expected": "new_task", "tags": ["vi"]}
+{"id": "n03", "task": "Fix bug thanh toán: user bị trừ tiền 2 lần khi bấm nút Pay nhanh", "message": "can you summarize this PDF for me after?", "expected": "new_task", "tags": ["en", "boundary"]}
+{"id": "n04", "task": "Migrate CI từ Jenkins sang GitHub Actions", "message": "dịch đoạn này sang tiếng Anh: 'Chúng tôi xin lỗi vì sự cố'", "expected": "new_task", "tags": ["vi"]}
+{"id": "n05", "task": "Refactor module auth sang JWT và viết lại test cho login", "message": "tạo cho anh một repo mới tên landing-page", "expected": "new_task", "tags": ["vi"]}
+{"id": "n06", "task": "Viết bài blog so sánh Postgres và MySQL cho subscribers", "message": "what's the weather in Saigon tomorrow?", "expected": "new_task", "tags": ["en"]}
+{"id": "n07", "task": "Fix bug thanh toán: user bị trừ tiền 2 lần khi bấm nút Pay nhanh", "message": "lên kế hoạch họp sprint review thứ 2 tuần sau", "expected": "new_task", "tags": ["vi"]}
+{"id": "n08", "task": "Migrate CI từ Jenkins sang GitHub Actions", "message": "viết script backup database hằng đêm lên S3", "expected": "new_task", "tags": ["vi", "needs-context"]}
+{"id": "n09", "task": "Refactor module auth sang JWT và viết lại test cho login", "message": "review PR #482 của Minh giúp anh", "expected": "new_task", "tags": ["vi", "needs-context"]}
+{"id": "n10", "task": "Viết bài blog so sánh Postgres và MySQL cho subscribers", "message": "đặt lịch nhắc anh gọi khách hàng lúc 3h chiều", "expected": "new_task", "tags": ["vi"]}
+{"id": "n11", "task": "Fix bug thanh toán: user bị trừ tiền 2 lần khi bấm nút Pay nhanh", "message": "thôi được rồi, xong vụ này thì làm báo cáo tuần nhé", "expected": "new_task", "tags": ["vi", "boundary"]}
+{"id": "n12", "task": "Migrate CI từ Jenkins sang GitHub Actions", "message": "tóm tắt giúp anh 5 tin AI nổi bật hôm nay", "expected": "new_task", "tags": ["vi"]}

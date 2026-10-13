@@ -1,0 +1,44 @@
+{
+  "v0: chỉ tên option": {
+    "right": 36,
+    "total": 40,
+    "confident": 33,
+    "confidentRight": 31,
+    "wrong": [
+      "thêm phần benchmark insert 1 triệu dòng nữa → new_task (0.84)",
+      "thôi khỏi viết test e2e, unit test là đủ → cancel (0.43)",
+      "also add a regression test for the double click → new_task (0.96)",
+      "đổi runner sang ubuntu-24.04 luôn → new_task (0.68)"
+    ]
+  },
+  "v1: có mô tả, thiếu bối cảnh": {
+    "right": 38,
+    "total": 40,
+    "confident": 38,
+    "confidentRight": 36,
+    "wrong": [
+      "dừng ở bước 3 → cancel (0.93)",
+      "thôi khỏi viết test e2e, unit test là đủ → cancel (0.85)"
+    ]
+  },
+  "v2: thêm bối cảnh đang bận": {
+    "right": 37,
+    "total": 40,
+    "confident": 35,
+    "confidentRight": 34,
+    "wrong": [
+      "dừng ở bước 3 → cancel (0.92)",
+      "thôi khỏi viết test e2e, unit test là đủ → cancel (0.55)",
+      "thôi được rồi, xong vụ này thì làm báo cáo tuần nhé → steer (0.17)"
+    ]
+  },
+  "v3: thêm ranh giới cancel/steer": {
+    "right": 39,
+    "total": 40,
+    "confident": 38,
+    "confidentRight": 38,
+    "wrong": [
+      "thôi được rồi, xong vụ này thì làm báo cáo tuần nhé → steer (0.59)"
+    ]
+  }
+}

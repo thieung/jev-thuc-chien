@@ -1,0 +1,84 @@
+{
+  "n": 40,
+  "variants": {
+    "Trước: keyword + LLM": {
+      "items": 40,
+      "correct": 39,
+      "accuracy": "97.5%",
+      "apiCalls": 36,
+      "apiErrors": 0,
+      "latencyP50": 1357,
+      "latencyP95": 4849,
+      "avgInputTokensPerItem": 197,
+      "costPer1000ItemsUsd": 0.0635,
+      "errors": {
+        "steer → cancel": 1
+      }
+    },
+    "Trước: LLM + ngữ cảnh task": {
+      "items": 40,
+      "correct": 39,
+      "accuracy": "97.5%",
+      "apiCalls": 36,
+      "apiErrors": 0,
+      "latencyP50": 1370,
+      "latencyP95": 5214,
+      "avgInputTokensPerItem": 212,
+      "costPer1000ItemsUsd": 0.0675,
+      "errors": {
+        "steer → cancel": 1
+      }
+    },
+    "Sau: Jev (chỉ message)": {
+      "items": 40,
+      "correct": 36,
+      "accuracy": "90.0%",
+      "apiCalls": 36,
+      "apiErrors": 0,
+      "latencyP50": 255,
+      "latencyP95": 632,
+      "avgInputTokensPerItem": 471,
+      "costPer1000ItemsUsd": 0.0198,
+      "errors": {
+        "steer → cancel": 1,
+        "steer → abstain": 1,
+        "new_task → abstain": 2
+      }
+    },
+    "Sau: Jev + ngữ cảnh task": {
+      "items": 40,
+      "correct": 38,
+      "accuracy": "95.0%",
+      "apiCalls": 36,
+      "apiErrors": 0,
+      "latencyP50": 262,
+      "latencyP95": 768,
+      "avgInputTokensPerItem": 499,
+      "costPer1000ItemsUsd": 0.0209,
+      "errors": {
+        "steer → cancel": 1,
+        "new_task → abstain": 1
+      }
+    },
+    "Active: Jev + ngữ cảnh, fallback LLM": {
+      "items": 40,
+      "correct": 39,
+      "accuracy": "97.5%",
+      "apiCalls": 37,
+      "apiErrors": 0,
+      "latencyP50": 266,
+      "latencyP95": 739,
+      "avgInputTokensPerItem": 505,
+      "costPer1000ItemsUsd": 0.0228,
+      "errors": {
+        "steer → cancel": 1
+      }
+    }
+  },
+  "extra": {
+    "Đi fast-path keyword (không gọi model)": "4/40",
+    "Jev chỉ message": "37/40 mục Jev đủ tự tin (≥ 0.75); đúng 36/37 trong số đó",
+    "Jev + ngữ cảnh": "39/40 mục Jev đủ tự tin (≥ 0.75); đúng 38/39 trong số đó",
+    "Active phải fallback sang LLM": "1/40"
+  }
+}
