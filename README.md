@@ -208,6 +208,7 @@ Lần chạy ngày 14/10/2026 (bản đang nằm trong `results/`), luật mặc
 - Đo 5 lần (11/10 một lần, 14/10 bốn lần; ba lần cuối chỉ gọi lại Jev, giữ kết quả Gemini): rubric mô tả rõ bỏ qua 12/15 ở 4 lần, 11/15 ở 1 lần, 0 bỏ nhầm cả 5 lần. Lần 11/15 là do batch hỏi link Figma có `noul` 0,16 thay vì 0,15; lần đó chi phí chỉ giảm 1,6%. Số từng lần ở `cases/03-memory-gate/results/repeat-runs.json`.
 - Một batch có nội dung (b12) làm Gemini timeout 30 giây ở cả 5 lần thử, ở cả hai lần gọi Gemini (11/10 và 14/10), nên cột "luôn gọi LLM" có 29 lượt gọi thành công và chi phí không tính lượt đó. Cả ba cột đều thiếu cùng một lượt.
 - LLM chạy trên Gemini free tier; chi phí quy theo giá paid tier. Gate gần như không tiết kiệm tiền ở case này (khoảng 4%), vì với batch rác LLM chỉ trả `[]`.
+- Chạy prompt coding agent ở cuối bài bằng Claude Code trên một repo mẫu 3 lần (11/10 và hai lần 14/10): agent tự viết câu hỏi dài 730–835 token mỗi lượt gọi Jev (câu hỏi trong bài khoảng 560), cả 3 lần 0 bỏ nhầm, và gate làm chi phí tăng 19–37%. Số từng lần ở `cases/03-memory-gate/results/e2e-agent-runs.json`. Repo mẫu và log của agent không nằm trong repo này.
 
 Jev không cam kết trả cùng một số ở mọi lần chạy. 30 batch do tác giả tự viết và tự gắn nhãn, rubric mô tả rõ được viết sau khi xem kết quả trên chính 30 batch này: đủ để thấy cơ chế, chưa đủ để nói tỉ lệ bỏ qua trên dữ liệu của bạn.
 

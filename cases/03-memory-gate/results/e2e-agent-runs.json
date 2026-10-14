@@ -1,0 +1,44 @@
+{
+  "purpose": "Chạy prompt coding agent ở cuối bài 03 bằng Claude Code trên repo mẫu toy-agent, đo câu hỏi Jev do agent tự viết và chi phí gate.",
+  "measured_at": "2026-10-14 20:38–20:46 +07",
+  "claude_code": "2.1.299 (Claude Code)",
+  "jev_model": "jev-1.13.0",
+  "article_question_input_tokens_per_call": {
+    "mean": 562,
+    "min": 506,
+    "max": 634,
+    "source": "results/raw.jsonl, biến thể rubric mô tả rõ"
+  },
+  "runs": [
+    {
+      "id": "2026-10-11",
+      "jev_input_tokens_per_call_mean": 835,
+      "junk_skipped": "10/15",
+      "content_wrong_skips": "0/15",
+      "cost_change_vs_no_gate": "+33%",
+      "note": "Thư mục chạy của lần này không còn; số lấy từ log phiên làm việc ngày 11/10."
+    },
+    {
+      "id": "2026-10-14-a",
+      "jev_input_tokens_per_call_mean": 727,
+      "jev_calls_with_usage": 28,
+      "junk_skipped": "11/15",
+      "content_wrong_skips": "0/15",
+      "cost_change_vs_no_gate": "+19%",
+      "note": "Gemini 429 ở 15/30 lượt, chi phí LLM các lượt đó là ước lượng theo nhãn; 2/30 Jev timeout (fail open). Agent tự báo 679 token vì tính lượt timeout là 0.",
+      "claude_cost_usd": 2.25
+    },
+    {
+      "id": "2026-10-14-b",
+      "jev_input_tokens_per_call_mean": 776,
+      "jev_calls_with_usage": 30,
+      "junk_skipped": "7/15",
+      "content_wrong_skips": "0/15",
+      "cost_change_vs_no_gate": "+37%",
+      "note": "Gemini 429/503 ở 15/30 lượt, agent gọi lại bằng --fill-llm nên chi phí đầy đủ.",
+      "claude_cost_usd": 2.64
+    }
+  ],
+  "conclusion": "Cả 3 lần agent đều viết câu hỏi dài hơn bản trong bài (727–835 so với 562 token mỗi lượt), đều 0 bỏ nhầm, và đều đo ra gate làm tăng chi phí 19–37%.",
+  "setup": "Repo mẫu toy-agent (src/memory-extract.js gọi gemini-3.1-flash-lite), cài TypeSafe skill ở cấp project, nhãn chuẩn đưa cho agent ở giai đoạn 2. Mỗi lần chạy là 3 lượt `claude -p` liên tiếp theo prompt ở cuối bài 03: khảo sát, duyệt câu hỏi và nhãn, tích hợp và chạy eval thật. Token Jev đếm lại từ usage.input_tokens trong log thô của agent."
+}
