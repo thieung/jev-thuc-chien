@@ -1,7 +1,8 @@
 # Jev thực chiến: demo
 
-Script để tự chạy lại các thí nghiệm trong series "Jev thực chiến" với TypeSafe Jev (`jev-1.13.0`). Hiện repo có case của bài 01 và bài 02; các case sau sẽ được thêm dần.
+Script để tự chạy lại các thí nghiệm trong series "Jev thực chiến" với TypeSafe Jev (`jev-1.13.0`). Hiện repo có case của bài 01, 02 và 03; các case sau sẽ được thêm dần.
 
+- Bài 03, bản trực quan: https://sites.slopengineer.dev/jev-thuc-chien-03/
 - Bài 02, bản trực quan: https://sites.slopengineer.dev/jev-thuc-chien-02/
 - Bài 01, bản trực quan: https://sites.slopengineer.dev/jev-thuc-chien-01/
 - Bài 0 (Jev là gì, đặt vào đâu trong agent): https://sites.slopengineer.dev/jev-thuc-chien-00/
@@ -151,3 +152,82 @@ Các bước:
 | Gemini `503 high demand` | Model quá tải. Chạy lại sau bằng `--only` cho đúng cách làm đó. |
 | `unknown variant in --only` | Copy nguyên tên cách làm từ `case.mjs`, đặt trong dấu nháy kép. |
 | `còn thiếu N câu trả lời` khi chạy `agent-baseline.mjs score` | Trả lời nốt các `<id>` được liệt kê; tên file phải là `<id>.json`. |
+
+## Bài 03: memory gate trước khi gọi LLM
+
+Agent đọc chat của team và gọi LLM để trích memory sau mỗi batch tin nhắn. Jev được đặt làm cổng trước lượt gọi đó: một câu `noul` ("batch này có gì đáng nhớ không") cộng một câu `score` 3 mức để có `confidence`. Chỉ bỏ qua LLM khi `noul ≤ 0,15`, `confidence ≥ 0,5` và mức có xác suất cao nhất là mức 0; Jev lỗi thì vẫn gọi LLM. 30 batch chat ngắn (15 có nội dung đáng nhớ, 15 rác), chạy qua 3 cách làm: luôn gọi LLM extraction, Jev gate với rubric `score` nhãn ngắn, Jev gate với rubric mô tả rõ.
+
+### Cần có
+
+- Node.js 20 trở lên. Không có dependency, không cần `npm install`.
+- `--replay` và `agent-baseline.mjs`: không cần key nào.
+- Chạy lại Jev gate: key TypeSafe. Chạy lại LLM extraction: thêm `GEMINI_API_KEY` (free key ở aistudio.google.com).
+
+### Chạy
+
+```bash
+git clone https://github.com/thieung/jev-thuc-chien.git && cd jev-thuc-chien
+
+# Không gọi API: áp lại luật bỏ qua lên kết quả đã lưu trong results/raw.jsonl
+node lib/run-case.mjs cases/03-memory-gate --replay
+SKIP_THRESHOLD=0.3 MIN_CONFIDENCE=0.2 node lib/run-case.mjs cases/03-memory-gate --replay   # nới ngưỡng: bỏ qua 13/30, vẫn 0 bỏ nhầm
+
+# Gọi API thật
+export TYPESAFE_API_KEY=... GEMINI_API_KEY=...
+node lib/run-case.mjs cases/03-memory-gate                                          # cả 3 cách làm: 60 Jev + ít nhất 30 Gemini
+node lib/run-case.mjs cases/03-memory-gate "--only=Sau: Jev gate, rubric mô tả rõ"   # chỉ Jev gate bản sửa, 30 Jev, chỉ cần TYPESAFE_API_KEY
+```
+
+Luật bỏ qua chỉ nằm trong `decide`, nên đổi ngưỡng rồi `--replay` không tốn request nào. `summary.md` có sẵn bảng quét 5 tổ hợp ngưỡng cho cả hai rubric. Bản nới ngưỡng ở trên chỉ đúng trên chính 30 batch dùng để viết rubric; đừng lấy nó làm ngưỡng production khi chưa chạy shadow.
+
+Kết quả ghi vào `cases/03-memory-gate/results/`: `raw.jsonl` (response thô của Jev và memory LLM trích ra), `summary.md` và `summary.json`. Mọi lệnh trên đều ghi đè các file này, nên dùng `git diff` để so và `git checkout -- cases/03-memory-gate/results` để lấy lại bản gốc.
+
+| Biến | Mặc định | Tác dụng |
+| --- | --- | --- |
+| `SKIP_THRESHOLD` | `0.15` | Bỏ qua chỉ khi `noul` nhỏ hơn hoặc bằng giá trị này |
+| `MIN_CONFIDENCE` | `0.5` | Bỏ qua chỉ khi `confidence` của câu `score` lớn hơn hoặc bằng giá trị này |
+| `JEV_MODEL` | `jev-1.13.0` | Model Jev |
+| `BASELINE_MODEL` | `gemini-3.1-flash-lite` | Model LLM extraction |
+| `GEMINI_MIN_GAP_MS` | `6700` | Khoảng cách tối thiểu giữa 2 lần gọi Gemini (free tier: 10 request/phút) |
+
+### Kết quả của tác giả
+
+Lần chạy ngày 14/10/2026 (bản đang nằm trong `results/`), luật mặc định:
+
+| | Luôn gọi LLM | Jev gate, rubric nhãn ngắn | Jev gate, rubric mô tả rõ |
+| --- | --- | --- | --- |
+| Batch rác được bỏ qua | 0/15 | 0/15 | 12/15 |
+| Batch đáng nhớ bị bỏ nhầm | 0 | 0 | 0 |
+| Memory rác bị lưu | 3 | 3 | 1 |
+| Lượt gọi LLM extraction | 30 | 30 | 18 |
+| Latency gate p50 / p95 | | 293 / 674 ms | 252 / 825 ms |
+| Chi phí cả bộ 30 batch | $0,0046 | $0,0052 | $0,0044 |
+
+- Rubric nhãn ngắn (`noise`, `short-lived`, `long-lived`) xếp cả 15 batch rác vào mức 1 với confidence trung bình 0,84, nên luật "mức cao nhất phải là mức 0" chặn hết. Rubric mô tả mỗi mức bằng nội dung cụ thể thì bỏ qua được 12/15.
+- Ba batch rác gate để lọt: lịch họp (`noul` 0,20, confidence 0,15), "đang review PR" (`noul` 0,17, mức cao nhất là mức 1), tin OpenAI (confidence 0,34).
+- Đo 5 lần (11/10 một lần, 14/10 bốn lần; ba lần cuối chỉ gọi lại Jev, giữ kết quả Gemini): rubric mô tả rõ bỏ qua 12/15 ở 4 lần, 11/15 ở 1 lần, 0 bỏ nhầm cả 5 lần. Lần 11/15 là do batch hỏi link Figma có `noul` 0,16 thay vì 0,15; lần đó chi phí chỉ giảm 1,6%. Số từng lần ở `cases/03-memory-gate/results/repeat-runs.json`.
+- Một batch có nội dung (b12) làm Gemini timeout 30 giây ở cả 5 lần thử, ở cả hai lần gọi Gemini (11/10 và 14/10), nên cột "luôn gọi LLM" có 29 lượt gọi thành công và chi phí không tính lượt đó. Cả ba cột đều thiếu cùng một lượt.
+- LLM chạy trên Gemini free tier; chi phí quy theo giá paid tier. Gate gần như không tiết kiệm tiền ở case này (khoảng 4%), vì với batch rác LLM chỉ trả `[]`.
+
+Jev không cam kết trả cùng một số ở mọi lần chạy. 30 batch do tác giả tự viết và tự gắn nhãn, rubric mô tả rõ được viết sau khi xem kết quả trên chính 30 batch này: đủ để thấy cơ chế, chưa đủ để nói tỉ lệ bỏ qua trên dữ liệu của bạn.
+
+### So với LLM bạn đang dùng
+
+Cùng cách làm như bài 02: dùng prompt mẫu ở mục "So với LLM bạn đang dùng" của bài 02, thay `02-intent-khi-agent-ban` bằng `03-memory-gate` ở mọi chỗ.
+
+```bash
+node lib/agent-baseline.mjs export cases/03-memory-gate    # 30 prompt LLM extraction, không có id hay nhãn
+node lib/agent-baseline.mjs score cases/03-memory-gate --label="<tool>, <model>, <cách chạy>"
+```
+
+Cách làm "trước" luôn gọi extraction nên cột đúng trên tổng không đổi. Hãy so dòng "Memory LLM trích ra từ batch rác" và "LLM extraction trả []" trong `agent-baseline/03-memory-gate/summary.md`.
+
+### Lỗi thường gặp
+
+| Lỗi | Cách sửa |
+| --- | --- |
+| `TYPESAFE_API_KEY is not set` hoặc `GEMINI_API_KEY is not set` | Export key trong cùng terminal. Nếu chỉ muốn chấm lại, dùng `--replay`, không cần key. |
+| `TimeoutError` ở cột "luôn gọi LLM" | Gemini không trả lời trong 30 giây sau 5 lần thử. Tác giả gặp ở 1/30 batch, chưa rõ nguyên nhân. Chạy lại cột đó bằng `--only`. |
+| Gemini `429` liên tục | Hết quota phút hoặc ngày của free tier. Tăng `GEMINI_MIN_GAP_MS`, đổi `BASELINE_MODEL`, hoặc chờ sang ngày. |
+| `unknown variant in --only` | Copy nguyên tên cách làm từ `case.mjs`, đặt trong dấu nháy kép. |
+| Đổi ngưỡng mà kết quả không đổi | Ba điều kiện phải cùng đúng. Ví dụ chỉ tăng `SKIP_THRESHOLD` lên 0.3 vẫn bỏ qua 12/30, vì các batch còn lại bị chặn bởi `MIN_CONFIDENCE` hoặc mức cao nhất. |

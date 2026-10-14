@@ -1,0 +1,73 @@
+{
+  "n": 30,
+  "variants": {
+    "Trước: luôn gọi LLM extraction": {
+      "items": 30,
+      "correct": 15,
+      "accuracy": "50.0%",
+      "apiCalls": 29,
+      "apiErrors": 0,
+      "latencyP50": 1493,
+      "latencyP95": 4452,
+      "avgInputTokensPerItem": 241,
+      "costPer1000ItemsUsd": 0.1536,
+      "errors": {
+        "skip → extract": 15
+      }
+    },
+    "Sau: Jev gate trước extraction": {
+      "items": 30,
+      "correct": 15,
+      "accuracy": "50.0%",
+      "apiCalls": 30,
+      "apiErrors": 0,
+      "latencyP50": 293,
+      "latencyP95": 674,
+      "avgInputTokensPerItem": 498,
+      "costPer1000ItemsUsd": 0.0209,
+      "errors": {
+        "skip → extract": 15
+      }
+    },
+    "Sau: Jev gate, rubric mô tả rõ": {
+      "items": 30,
+      "correct": 27,
+      "accuracy": "90.0%",
+      "apiCalls": 30,
+      "apiErrors": 0,
+      "latencyP50": 252,
+      "latencyP95": 825,
+      "avgInputTokensPerItem": 562,
+      "costPer1000ItemsUsd": 0.0236,
+      "errors": {
+        "skip → extract": 3
+      }
+    }
+  },
+  "extra": {
+    "Jev gate (rubric mô tả rõ) bỏ qua extraction": "12/30, skip nhầm 0",
+    "Confidence TB của score trên batch rác: rubric nhãn ngắn / rubric mô tả rõ": "0.84 / 0.77",
+    "Sweep rubric nhãn ngắn (replay)": [
+      "noul≤0.15, conf≥0.5, level≤0: skip 0/30, skip nhầm 0",
+      "noul≤0.15, conf≥0.5, level≤1: skip 11/30, skip nhầm 0",
+      "noul≤0.15, conf≥0, level≤2: skip 12/30, skip nhầm 0",
+      "noul≤0.3, conf≥0, level≤2: skip 15/30, skip nhầm 0",
+      "noul≤0.05, conf≥0.7, level≤0: skip 0/30, skip nhầm 0"
+    ],
+    "Sweep rubric mô tả rõ (replay)": [
+      "noul≤0.15, conf≥0.5, level≤0: skip 12/30, skip nhầm 0",
+      "noul≤0.15, conf≥0.5, level≤1: skip 12/30, skip nhầm 0",
+      "noul≤0.15, conf≥0, level≤2: skip 13/30, skip nhầm 0",
+      "noul≤0.3, conf≥0, level≤2: skip 15/30, skip nhầm 0",
+      "noul≤0.05, conf≥0.7, level≤0: skip 4/30, skip nhầm 0"
+    ],
+    "Batch không có gì bền vững (nhãn skip)": "15/30",
+    "LLM extraction trả [] (trả tiền mà không thu được gì)": "12/30",
+    "Jev gate bỏ qua extraction": "0/30",
+    "Skip nhầm batch có nội dung bền vững (lỗi nguy hiểm)": "0",
+    "Memory LLM trích ra từ batch rác (bị lưu nếu không có gate)": "3",
+    "Chi phí pipeline trước (USD, cả bộ)": "0.004608",
+    "Chi phí pipeline sau, rubric nhãn ngắn = Jev + extraction còn lại (USD)": "0.005235",
+    "Chi phí pipeline sau, rubric mô tả rõ (USD)": "0.004407"
+  }
+}

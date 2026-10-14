@@ -1,0 +1,121 @@
+{
+  "case": "03-memory-gate",
+  "rule": "noul<=0.15 && confidence>=0.5 && top level==0",
+  "runs": [
+    {
+      "measured": "2026-10-11",
+      "calls": "Jev + Gemini",
+      "in_repo": false,
+      "short_labels": {
+        "junk_skipped": 0,
+        "wrong_skips": 0,
+        "junk_memories_stored": 3,
+        "cost_change_pct": 13.6,
+        "b30_noul": 0.16,
+        "latency_p50_ms": 484,
+        "latency_p95_ms": 1080
+      },
+      "descriptive": {
+        "junk_skipped": 12,
+        "wrong_skips": 0,
+        "junk_memories_stored": 1,
+        "cost_change_pct": -4.4,
+        "b30_noul": 0.15,
+        "latency_p50_ms": 269,
+        "latency_p95_ms": 439
+      }
+    },
+    {
+      "measured": "2026-10-14 18:03",
+      "calls": "Jev + Gemini",
+      "in_repo": false,
+      "short_labels": {
+        "junk_skipped": 0,
+        "wrong_skips": 0,
+        "junk_memories_stored": 3,
+        "cost_change_pct": 13.6,
+        "b30_noul": 0.15,
+        "latency_p50_ms": 382,
+        "latency_p95_ms": 1344
+      },
+      "descriptive": {
+        "junk_skipped": 11,
+        "wrong_skips": 0,
+        "junk_memories_stored": 2,
+        "cost_change_pct": -1.6,
+        "b30_noul": 0.16,
+        "latency_p50_ms": 257,
+        "latency_p95_ms": 651
+      }
+    },
+    {
+      "measured": "2026-10-14 18:26",
+      "calls": "Jev only, Gemini results reused",
+      "in_repo": false,
+      "short_labels": {
+        "junk_skipped": 0,
+        "wrong_skips": 0,
+        "junk_memories_stored": 3,
+        "cost_change_pct": 13.6,
+        "b30_noul": 0.16,
+        "latency_p50_ms": 258,
+        "latency_p95_ms": 807
+      },
+      "descriptive": {
+        "junk_skipped": 12,
+        "wrong_skips": 0,
+        "junk_memories_stored": 1,
+        "cost_change_pct": -4.4,
+        "b30_noul": 0.15,
+        "latency_p50_ms": 286,
+        "latency_p95_ms": 1048
+      }
+    },
+    {
+      "measured": "2026-10-14 18:27",
+      "calls": "Jev only, Gemini results reused",
+      "in_repo": true,
+      "short_labels": {
+        "junk_skipped": 0,
+        "wrong_skips": 0,
+        "junk_memories_stored": 3,
+        "cost_change_pct": 13.6,
+        "b30_noul": 0.16,
+        "latency_p50_ms": 293,
+        "latency_p95_ms": 674
+      },
+      "descriptive": {
+        "junk_skipped": 12,
+        "wrong_skips": 0,
+        "junk_memories_stored": 1,
+        "cost_change_pct": -4.4,
+        "b30_noul": 0.15,
+        "latency_p50_ms": 252,
+        "latency_p95_ms": 825
+      }
+    },
+    {
+      "measured": "2026-10-14 18:28",
+      "calls": "Jev only, Gemini results reused",
+      "in_repo": false,
+      "short_labels": {
+        "junk_skipped": 0,
+        "wrong_skips": 0,
+        "junk_memories_stored": 3,
+        "cost_change_pct": 13.6,
+        "b30_noul": 0.14,
+        "latency_p50_ms": 278,
+        "latency_p95_ms": 833
+      },
+      "descriptive": {
+        "junk_skipped": 12,
+        "wrong_skips": 0,
+        "junk_memories_stored": 1,
+        "cost_change_pct": -4.4,
+        "b30_noul": 0.15,
+        "latency_p50_ms": 276,
+        "latency_p95_ms": 864
+      }
+    }
+  ]
+}
