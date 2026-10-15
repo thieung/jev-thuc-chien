@@ -1,7 +1,8 @@
 # Jev thực chiến: demo
 
-Script để tự chạy lại các thí nghiệm trong series "Jev thực chiến" với TypeSafe Jev (`jev-1.13.0`). Hiện repo có case của bài 01, 02 và 03; các case sau sẽ được thêm dần.
+Script để tự chạy lại các thí nghiệm trong series "Jev thực chiến" với TypeSafe Jev (`jev-1.13.0`). Hiện repo có case của bài 01, 02, 03 và 04; các case sau sẽ được thêm dần.
 
+- Bài 04, bản trực quan: https://sites.slopengineer.dev/jev-thuc-chien-04/
 - Bài 03, bản trực quan: https://sites.slopengineer.dev/jev-thuc-chien-03/
 - Bài 02, bản trực quan: https://sites.slopengineer.dev/jev-thuc-chien-02/
 - Bài 01, bản trực quan: https://sites.slopengineer.dev/jev-thuc-chien-01/
@@ -232,3 +233,78 @@ Cách làm "trước" luôn gọi extraction nên cột đúng trên tổng khô
 | Gemini `429` liên tục | Hết quota phút hoặc ngày của free tier. Tăng `GEMINI_MIN_GAP_MS`, đổi `BASELINE_MODEL`, hoặc chờ sang ngày. |
 | `unknown variant in --only` | Copy nguyên tên cách làm từ `case.mjs`, đặt trong dấu nháy kép. |
 | Đổi ngưỡng mà kết quả không đổi | Ba điều kiện phải cùng đúng. Ví dụ chỉ tăng `SKIP_THRESHOLD` lên 0.3 vẫn bỏ qua 12/30, vì các batch còn lại bị chặn bởi `MIN_CONFIDENCE` hoặc mức cao nhất. |
+
+
+## Bài 04: chọn memory đưa vào context
+
+Retrieval trả về 8 memory ứng viên cho mỗi câu hỏi, context chỉ nhận tối đa 5 memory và 200 token. Jev chấm từng ứng viên bằng một câu `score` 3 mức, cả 8 câu trong một request. Code chuẩn hóa `score / 2` về 0..1, giữ ứng viên khi điểm chuẩn hóa ≥ `ADMIT_THRESHOLD` hoặc khi `confidence` < `MIN_CONFIDENCE` (không chắc thì giữ), xếp theo điểm rồi cắt theo ngân sách; Jev lỗi thì quay về thứ tự retrieval. 12 câu hỏi, 96 memory, 35 memory cần thiết, chạy qua 3 cách làm: top-5 theo thứ tự retrieval, LLM chọn memory, Jev chấm từng ứng viên.
+
+### Cần có
+
+- Node.js 20 trở lên. Không có dependency, không cần `npm install`.
+- `--replay` và `agent-baseline.mjs`: không cần key nào.
+- Chạy lại Jev: key TypeSafe. Chạy lại LLM chọn memory: thêm `GEMINI_API_KEY` (free key ở aistudio.google.com).
+
+### Chạy
+
+```bash
+git clone https://github.com/thieung/jev-thuc-chien.git && cd jev-thuc-chien
+
+# Không gọi API: áp lại policy lên kết quả đã lưu trong results/raw.jsonl
+node lib/run-case.mjs cases/04-retrieval-admission --replay
+ADMIT_THRESHOLD=0.75 MIN_CONFIDENCE=0 node lib/run-case.mjs cases/04-retrieval-admission --replay   # gọn: 22/35 cần thiết, 4 nhiễu
+
+# Gọi API thật
+export TYPESAFE_API_KEY=... GEMINI_API_KEY=...
+node lib/run-case.mjs cases/04-retrieval-admission                                         # cả 3 cách làm: 12 Jev + 12 Gemini
+node lib/run-case.mjs cases/04-retrieval-admission "--only=Sau: Jev chấm từng candidate"   # chỉ Jev, 12 request, chỉ cần TYPESAFE_API_KEY
+```
+
+Policy chỉ nằm trong `decide`, nên đổi ngưỡng rồi `--replay` không tốn request nào. Kết quả ghi vào `cases/04-retrieval-admission/results/`: `raw.jsonl` (response thô của Jev và danh sách id LLM chọn), `summary.md` và `summary.json`. Mọi lệnh trên đều ghi đè các file này, nên dùng `git diff` để so và `git checkout -- cases/04-retrieval-admission/results` để lấy lại bản gốc.
+
+| Biến | Mặc định | Tác dụng |
+| --- | --- | --- |
+| `ADMIT_THRESHOLD` | `0.25` | Giữ ứng viên khi `score / 2` lớn hơn hoặc bằng giá trị này |
+| `MIN_CONFIDENCE` | `0.5` | Giữ ứng viên khi `confidence` nhỏ hơn giá trị này. Đặt `0` để tắt luật "không chắc thì giữ" |
+| `JEV_MODEL` | `jev-1.13.0` | Model Jev |
+| `BASELINE_MODEL` | `gemini-3.1-flash-lite` | Model LLM chọn memory |
+| `GEMINI_MIN_GAP_MS` | `6700` | Khoảng cách tối thiểu giữa 2 lần gọi Gemini (free tier: 10 request/phút) |
+
+### Kết quả của tác giả
+
+Lần chạy ngày 11/10/2026 (bản đang nằm trong `results/`), policy mặc định:
+
+| | Top-5 theo retrieval | LLM chọn memory | Jev, ngưỡng 0,25 |
+| --- | --- | --- | --- |
+| Câu hỏi có đủ memory cần thiết | 3/12 | 7/12 | 11/12 |
+| Memory cần thiết được đưa vào | 25/35 | 28/35 | 34/35 |
+| Tổng đưa vào / nhiễu | 60 / 35 | 29 / 1 | 60 / 26 |
+| Latency p50 / p95 | | 2218 / 3773 ms | 403 / 898 ms |
+| Chi phí / 1.000 câu hỏi | $0 | $0,0851 | $0,0506 |
+
+- Quét ngưỡng bằng `--replay`: ngưỡng 0,25 hoặc 0,5 khi giữ ứng viên không chắc đều ra 34/35; tắt luật đó thì 0,25 ra 34/35 (56 đưa vào, 22 nhiễu), 0,5 ra 31/35 (45/14), 0,75 ra 22/35 (26/4). Jev có confidence < 0,5 ở 49/96 ứng viên, nên luật "không chắc thì giữ" quyết định gần hết.
+- Ca sai duy nhất ở ngưỡng mặc định là q10: memory "Dedup dựa trên event_id, giữ 24h" có điểm chuẩn hóa 0,04 với confidence 0,90. Nó chỉ liên quan qua một memory khác, mà mỗi câu `score` chỉ thấy state và đúng một ứng viên.
+- Dataset cố ý đặt memory cần thiết ở cả vị trí sâu trong danh sách retrieval, nên top-5 thua nặng; vector search thật xếp hạng tốt hơn thì khoảng cách sẽ nhỏ hơn.
+- LLM chạy trên Gemini free tier; chi phí quy theo giá paid tier.
+- Đo 4 lần (11/10 một lần, 15/10 ba lần, lần nào cũng gọi lại đủ Jev và Gemini; số từng lần ở `results/repeat-runs.json`): ba hàng độ chính xác giống hệt nhau cả 4 lần, số memory cần thiết ở mọi dòng quét ngưỡng cũng vậy, chỉ số nhiễu lệch 1 đến 2. Latency thì không: p50 Gemini 1158–2218 ms, Jev 403–743 ms, tức Jev nhanh hơn 1,6 đến 5,5 lần tùy lần đo. Jev không chắc ở 48–49/96 ứng viên; memory dedup ở q10 ra 0,04–0,055 và bị loại cả 4 lần.
+
+Jev không cam kết trả cùng một số ở mọi lần chạy. 12 câu hỏi do tác giả tự viết và tự gắn nhãn; phép đo chỉ xét memory có được đưa vào context hay không, chưa đo chất lượng câu trả lời cuối cùng.
+
+### So với LLM bạn đang dùng
+
+Cùng cách làm như bài 02: dùng prompt mẫu ở mục "So với LLM bạn đang dùng" của bài 02, thay `02-intent-khi-agent-ban` bằng `04-retrieval-admission` ở mọi chỗ.
+
+```bash
+node lib/agent-baseline.mjs export cases/04-retrieval-admission    # 12 prompt chọn memory, không có nhãn
+node lib/agent-baseline.mjs score cases/04-retrieval-admission --label="<tool>, <model>, <cách chạy>"
+```
+
+### Lỗi thường gặp
+
+| Lỗi | Cách sửa |
+| --- | --- |
+| `TYPESAFE_API_KEY is not set` hoặc `GEMINI_API_KEY is not set` | Export key trong cùng terminal. Nếu chỉ muốn chấm lại, dùng `--replay`, không cần key. |
+| Gemini `429` liên tục | Hết quota phút hoặc ngày của free tier. Tăng `GEMINI_MIN_GAP_MS`, đổi `BASELINE_MODEL`, hoặc chờ sang ngày. |
+| `unknown variant in --only` | Copy nguyên tên cách làm từ `case.mjs`, đặt trong dấu nháy kép. |
+| Tăng `ADMIT_THRESHOLD` mà kết quả không đổi | Ứng viên có `confidence` < `MIN_CONFIDENCE` vẫn được giữ. Đặt `MIN_CONFIDENCE=0` để chỉ lọc theo điểm. |
+| So `score` thô với ngưỡng | `score` của câu 3 mức chạy từ 0 đến 2. Chia cho (số mức − 1) trước khi so. |

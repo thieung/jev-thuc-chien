@@ -1,0 +1,342 @@
+{
+  "case": "04-retrieval-admission",
+  "policy": "admit if score/2 >= ADMIT or confidence < MIN_CONF; rank by norm; cap 5 entries, 200 tokens",
+  "runs": [
+    {
+      "measured": "2026-10-11 14:16",
+      "label": "baseline đã có trong bài",
+      "in_repo": true,
+      "top5": {
+        "full": "3/12",
+        "needed": "25/35",
+        "injected": 60,
+        "noise": 35
+      },
+      "llm": {
+        "items": 12,
+        "correct": 7,
+        "accuracy": "58.3%",
+        "apiCalls": 12,
+        "apiErrors": 0,
+        "latencyP50": 2218,
+        "latencyP95": 3773,
+        "avgInputTokensPerItem": 182,
+        "costPer1000ItemsUsd": 0.0851,
+        "model": [
+          "gemini-3.1-flash-lite"
+        ],
+        "full": "7/12",
+        "needed": "28/35",
+        "injected": 29,
+        "noise": 1
+      },
+      "jev": {
+        "items": 12,
+        "correct": 11,
+        "accuracy": "91.7%",
+        "apiCalls": 12,
+        "apiErrors": 0,
+        "latencyP50": 403,
+        "latencyP95": 898,
+        "avgInputTokensPerItem": 1205,
+        "costPer1000ItemsUsd": 0.0506,
+        "model": [
+          "jev-1.13.0"
+        ],
+        "full": "11/12",
+        "needed": "34/35",
+        "injected": 60,
+        "noise": 26
+      },
+      "jev_sweep": {
+        "admit=0.25,minConf=0.5": {
+          "full": "11/12",
+          "needed": "34/35",
+          "injected": 60,
+          "noise": 26
+        },
+        "admit=0.25,minConf=0": {
+          "full": "11/12",
+          "needed": "34/35",
+          "injected": 56,
+          "noise": 22
+        },
+        "admit=0.5,minConf=0.5": {
+          "full": "11/12",
+          "needed": "34/35",
+          "injected": 60,
+          "noise": 26
+        },
+        "admit=0.5,minConf=0": {
+          "full": "9/12",
+          "needed": "31/35",
+          "injected": 45,
+          "noise": 14
+        },
+        "admit=0.75,minConf=0": {
+          "full": "6/12",
+          "needed": "22/35",
+          "injected": 26,
+          "noise": 4
+        }
+      },
+      "jev_unsure": "49/96",
+      "q10_m5_dedup": {
+        "norm": 0.04,
+        "confidence": 0.9
+      }
+    },
+    {
+      "measured": "2026-10-15 14:14",
+      "label": "lượt 1, Jev + Gemini",
+      "in_repo": false,
+      "top5": {
+        "full": "3/12",
+        "needed": "25/35",
+        "injected": 60,
+        "noise": 35
+      },
+      "llm": {
+        "items": 12,
+        "correct": 7,
+        "accuracy": "58.3%",
+        "apiCalls": 12,
+        "apiErrors": 0,
+        "latencyP50": 1195,
+        "latencyP95": 1490,
+        "avgInputTokensPerItem": 182,
+        "costPer1000ItemsUsd": 0.0851,
+        "model": [
+          "gemini-3.1-flash-lite"
+        ],
+        "full": "7/12",
+        "needed": "28/35",
+        "injected": 29,
+        "noise": 1
+      },
+      "jev": {
+        "items": 12,
+        "correct": 11,
+        "accuracy": "91.7%",
+        "apiCalls": 12,
+        "apiErrors": 0,
+        "latencyP50": 577,
+        "latencyP95": 2131,
+        "avgInputTokensPerItem": 1205,
+        "costPer1000ItemsUsd": 0.0506,
+        "model": [
+          "jev-1.13.0"
+        ],
+        "full": "11/12",
+        "needed": "34/35",
+        "injected": 60,
+        "noise": 26
+      },
+      "jev_sweep": {
+        "admit=0.25,minConf=0.5": {
+          "full": "11/12",
+          "needed": "34/35",
+          "injected": 60,
+          "noise": 26
+        },
+        "admit=0.25,minConf=0": {
+          "full": "11/12",
+          "needed": "34/35",
+          "injected": 56,
+          "noise": 22
+        },
+        "admit=0.5,minConf=0.5": {
+          "full": "11/12",
+          "needed": "34/35",
+          "injected": 60,
+          "noise": 26
+        },
+        "admit=0.5,minConf=0": {
+          "full": "9/12",
+          "needed": "31/35",
+          "injected": 45,
+          "noise": 14
+        },
+        "admit=0.75,minConf=0": {
+          "full": "6/12",
+          "needed": "22/35",
+          "injected": 26,
+          "noise": 4
+        }
+      },
+      "jev_unsure": "48/96",
+      "q10_m5_dedup": {
+        "norm": 0.045,
+        "confidence": 0.88
+      }
+    },
+    {
+      "measured": "2026-10-15 14:15",
+      "label": "lượt 2, Jev + Gemini",
+      "in_repo": false,
+      "top5": {
+        "full": "3/12",
+        "needed": "25/35",
+        "injected": 60,
+        "noise": 35
+      },
+      "llm": {
+        "items": 12,
+        "correct": 7,
+        "accuracy": "58.3%",
+        "apiCalls": 12,
+        "apiErrors": 0,
+        "latencyP50": 1223,
+        "latencyP95": 1302,
+        "avgInputTokensPerItem": 182,
+        "costPer1000ItemsUsd": 0.0851,
+        "model": [
+          "gemini-3.1-flash-lite"
+        ],
+        "full": "7/12",
+        "needed": "28/35",
+        "injected": 29,
+        "noise": 1
+      },
+      "jev": {
+        "items": 12,
+        "correct": 11,
+        "accuracy": "91.7%",
+        "apiCalls": 12,
+        "apiErrors": 0,
+        "latencyP50": 743,
+        "latencyP95": 2741,
+        "avgInputTokensPerItem": 1205,
+        "costPer1000ItemsUsd": 0.0506,
+        "model": [
+          "jev-1.13.0"
+        ],
+        "full": "11/12",
+        "needed": "34/35",
+        "injected": 60,
+        "noise": 26
+      },
+      "jev_sweep": {
+        "admit=0.25,minConf=0.5": {
+          "full": "11/12",
+          "needed": "34/35",
+          "injected": 60,
+          "noise": 26
+        },
+        "admit=0.25,minConf=0": {
+          "full": "11/12",
+          "needed": "34/35",
+          "injected": 56,
+          "noise": 22
+        },
+        "admit=0.5,minConf=0.5": {
+          "full": "11/12",
+          "needed": "34/35",
+          "injected": 59,
+          "noise": 25
+        },
+        "admit=0.5,minConf=0": {
+          "full": "9/12",
+          "needed": "31/35",
+          "injected": 45,
+          "noise": 14
+        },
+        "admit=0.75,minConf=0": {
+          "full": "6/12",
+          "needed": "22/35",
+          "injected": 26,
+          "noise": 4
+        }
+      },
+      "jev_unsure": "48/96",
+      "q10_m5_dedup": {
+        "norm": 0.055,
+        "confidence": 0.85
+      }
+    },
+    {
+      "measured": "2026-10-15 14:17",
+      "label": "lượt 3, Jev + Gemini",
+      "in_repo": false,
+      "top5": {
+        "full": "3/12",
+        "needed": "25/35",
+        "injected": 60,
+        "noise": 35
+      },
+      "llm": {
+        "items": 12,
+        "correct": 7,
+        "accuracy": "58.3%",
+        "apiCalls": 12,
+        "apiErrors": 0,
+        "latencyP50": 1158,
+        "latencyP95": 1337,
+        "avgInputTokensPerItem": 182,
+        "costPer1000ItemsUsd": 0.0851,
+        "model": [
+          "gemini-3.1-flash-lite"
+        ],
+        "full": "7/12",
+        "needed": "28/35",
+        "injected": 29,
+        "noise": 1
+      },
+      "jev": {
+        "items": 12,
+        "correct": 11,
+        "accuracy": "91.7%",
+        "apiCalls": 12,
+        "apiErrors": 0,
+        "latencyP50": 504,
+        "latencyP95": 1157,
+        "avgInputTokensPerItem": 1205,
+        "costPer1000ItemsUsd": 0.0506,
+        "model": [
+          "jev-1.13.0"
+        ],
+        "full": "11/12",
+        "needed": "34/35",
+        "injected": 60,
+        "noise": 26
+      },
+      "jev_sweep": {
+        "admit=0.25,minConf=0.5": {
+          "full": "11/12",
+          "needed": "34/35",
+          "injected": 60,
+          "noise": 26
+        },
+        "admit=0.25,minConf=0": {
+          "full": "11/12",
+          "needed": "34/35",
+          "injected": 58,
+          "noise": 24
+        },
+        "admit=0.5,minConf=0.5": {
+          "full": "11/12",
+          "needed": "34/35",
+          "injected": 60,
+          "noise": 26
+        },
+        "admit=0.5,minConf=0": {
+          "full": "9/12",
+          "needed": "31/35",
+          "injected": 45,
+          "noise": 14
+        },
+        "admit=0.75,minConf=0": {
+          "full": "6/12",
+          "needed": "22/35",
+          "injected": 25,
+          "noise": 3
+        }
+      },
+      "jev_unsure": "48/96",
+      "q10_m5_dedup": {
+        "norm": 0.045,
+        "confidence": 0.88
+      }
+    }
+  ]
+}
