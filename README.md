@@ -1,7 +1,8 @@
 # Jev thực chiến: demo
 
-Script để tự chạy lại các thí nghiệm trong series "Jev thực chiến" với TypeSafe Jev (`jev-1.13.0`). Hiện repo có case của bài 01, 02, 03 và 04; các case sau sẽ được thêm dần.
+Script để tự chạy lại các thí nghiệm trong series "Jev thực chiến" với TypeSafe Jev (`jev-1.13.0`). Hiện repo có case của bài 01, 02, 03, 04 và 05; các case sau sẽ được thêm dần.
 
+- Bài 05, bản trực quan: https://sites.slopengineer.dev/jev-thuc-chien-05/
 - Bài 04, bản trực quan: https://sites.slopengineer.dev/jev-thuc-chien-04/
 - Bài 03, bản trực quan: https://sites.slopengineer.dev/jev-thuc-chien-03/
 - Bài 02, bản trực quan: https://sites.slopengineer.dev/jev-thuc-chien-02/
@@ -308,3 +309,72 @@ node lib/agent-baseline.mjs score cases/04-retrieval-admission --label="<tool>, 
 | `unknown variant in --only` | Copy nguyên tên cách làm từ `case.mjs`, đặt trong dấu nháy kép. |
 | Tăng `ADMIT_THRESHOLD` mà kết quả không đổi | Ứng viên có `confidence` < `MIN_CONFIDENCE` vẫn được giữ. Đặt `MIN_CONFIDENCE=0` để chỉ lọc theo điểm. |
 | So `score` thô với ngưỡng | `score` của câu 3 mức chạy từ 0 đến 2. Chia cho (số mức − 1) trước khi so. |
+
+
+## Bài 05: lọc bài đáng đọc khi lướt X
+
+Ẩn post không đáng mở khi lướt feed coding agent. Thay vì hỏi một LLM "keep hay hide", Jev trả lời 4 câu trong một request: `on_topic`, `actionable`, `engagement_bait` (`noul`) và `reading_value` (`score` 3 mức). Sở thích của người dùng nằm trong state. Code ẩn post khi `engagement_bait` ≥ 0,5, `on_topic` < 0,5 hoặc `actionable` < 0,5, và hiện post khi Jev lỗi. Hai cách làm: LLM keep/hide và Jev 4 câu hỏi + luật. `drafts.mjs` so thêm một câu `noul` gộp "worth reading" với 4 câu tách.
+
+**`dataset.jsonl` ở đây là bộ tổng hợp.** Bài viết đo trên 51 post thật trên X (25/09–10/10/2026), nhưng đó là nội dung của người khác nên không đưa lên repo. Bộ trong repo gồm 51 post do tác giả viết (`"source": "synthetic"`): mỗi post mô phỏng một loại post trong bộ thật bằng lời khác, không giữ câu chữ gốc, và cùng phân bố với bộ thật: 19 `keep`, 32 `hide`, 6 `copypasta`, 7 `borderline`, 12 post không phải tiếng Anh (5 vi, 3 ja, 2 zh, 1 es, 1 th). Repo chưa có `results/` cho bộ này, nên số bạn chạy ra là lần đo đầu tiên trên bộ tổng hợp và sẽ khác số trong bài.
+
+### Cần có
+
+- Node.js 20 trở lên. Không có dependency, không cần `npm install`.
+- Chạy Jev: key TypeSafe. Chạy LLM keep/hide: thêm `GEMINI_API_KEY` (free key ở aistudio.google.com).
+- `--replay` và `agent-baseline.mjs score` cần `results/raw.jsonl`, tức phải chạy Jev ít nhất một lần.
+
+### Chạy
+
+```bash
+git clone https://github.com/thieung/jev-thuc-chien.git && cd jev-thuc-chien
+export TYPESAFE_API_KEY=...
+
+node lib/run-case.mjs cases/05-loc-bai-x "--only=Sau: Jev 4 câu hỏi + policy"   # 51 request Jev, dưới $0,01
+node lib/run-case.mjs cases/05-loc-bai-x --replay                              # 0 request: áp lại luật lên raw.jsonl
+node cases/05-loc-bai-x/drafts.mjs                                             # 1 câu gộp so với 4 câu tách, ~51 request Jev
+
+export GEMINI_API_KEY=...
+node lib/run-case.mjs cases/05-loc-bai-x "--only=Trước: LLM phân loại"         # 51 request Gemini, giữ kết quả Jev đã có
+```
+
+Luật nằm trong `keepFromAnswers` của `case.mjs`. Đổi ngưỡng ở đó rồi chạy `--replay` thì không tốn request nào. Kết quả ghi vào `cases/05-loc-bai-x/results/` (`raw.jsonl`, `summary.md`, `summary.json`, và `drafts.json` nếu chạy `drafts.mjs`).
+
+Muốn thử với feed của bạn: sửa `INTEREST` trong `case.mjs`, thay `dataset.jsonl` bằng post bạn tự gom và gắn nhãn. Mỗi dòng cần `id`, `text`, `expected` (`keep` hoặc `hide`) và `tags`; `extraMetrics` dùng tag `en` để đếm post không phải tiếng Anh.
+
+### Kết quả của tác giả (bộ post thật, không công khai)
+
+Lần chạy ngày 11/10/2026 trên `jev-1.13.0`, 51 post thật:
+
+| | LLM keep/hide (`gemini-3.1-flash-lite`) | Jev 4 câu hỏi + luật |
+| --- | --- | --- |
+| Đúng | 42/51 | 42/51 |
+| Post đáng đọc bị ẩn nhầm | 0/19 | 1/19 |
+| Post được hiện mà đúng là đáng đọc | 19/28 (68%) | 18/26 (69%) |
+| Input token / post | 264 | 802 |
+| Chi phí / 1.000 post | $0,0826 | $0,0337 |
+| Latency p50 / p95 | 7832 / 17079 ms | 255 / 471 ms |
+
+- Hạ ngưỡng `engagement_bait` xuống 0,4 bằng replay: 46/51, phần được hiện đúng là đáng đọc 82%, vẫn ẩn nhầm 1/19. Ngưỡng chọn trên chính 51 post này nên con số lạc quan.
+- `drafts.mjs`, 1 lần chạy: câu gộp đúng 41/51 ở 0,5; tốt nhất 42/51 ở 0,6; ở 0,7 còn 41/51 và ẩn nhầm 7/19. Giá trị câu gộp của post đáng đọc là 0,50–0,87, của post nên ẩn là 0,03–0,73.
+- Hai cách làm cùng giữ nhầm 8 post, 6 trong đó là copypasta. Khử trùng lặp là việc của code, không phải của Jev.
+- LLM chạy trên Gemini free tier, chi phí quy theo giá paid tier; latency Gemini vì vậy không so được với Jev.
+
+Jev không cam kết trả cùng một số ở mọi lần chạy. Nhãn "đáng đọc" là đánh giá của một người.
+
+### So với LLM bạn đang dùng
+
+Cùng cách làm như bài 02: dùng prompt mẫu ở mục "So với LLM bạn đang dùng" của bài 02, thay `02-intent-khi-agent-ban` bằng `05-loc-bai-x` ở mọi chỗ. Chạy lệnh Jev ở trên trước, vì `score` chấm lại trên `results/raw.jsonl`.
+
+```bash
+node lib/agent-baseline.mjs export cases/05-loc-bai-x    # 51 prompt keep/hide, không có nhãn
+node lib/agent-baseline.mjs score cases/05-loc-bai-x --label="<tool>, <model>, <cách chạy>"
+```
+
+### Lỗi thường gặp
+
+| Lỗi | Cách sửa |
+| --- | --- |
+| `no saved run at .../results/raw.jsonl` | Repo không kèm kết quả cho bộ tổng hợp. Chạy lệnh Jev `--only=...` trước, rồi mới `--replay`, `drafts.mjs` hoặc `agent-baseline.mjs score`. |
+| `TYPESAFE_API_KEY is not set` hoặc `GEMINI_API_KEY is not set` | Export key trong cùng terminal. |
+| `unknown variant in --only` | Copy nguyên tên cách làm từ `case.mjs`, đặt trong dấu nháy kép. |
+| Số khác bài viết | Đúng như dự kiến: bài đo trên bộ post thật, repo chỉ có bộ tổng hợp. |
