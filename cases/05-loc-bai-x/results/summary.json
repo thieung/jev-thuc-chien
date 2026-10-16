@@ -1,0 +1,39 @@
+{
+  "n": 51,
+  "variants": {
+    "Trước: LLM phân loại": {
+      "items": 51,
+      "correct": 43,
+      "accuracy": "84.3%",
+      "apiCalls": 51,
+      "apiErrors": 3,
+      "latencyP50": 4140,
+      "latencyP95": 26270,
+      "avgInputTokensPerItem": 151,
+      "costPer1000ItemsUsd": 0.0534,
+      "errors": {
+        "hide → keep": 7,
+        "keep → hide": 1
+      }
+    },
+    "Sau: Jev 4 câu hỏi + policy": {
+      "items": 51,
+      "correct": 48,
+      "accuracy": "94.1%",
+      "apiCalls": 51,
+      "apiErrors": 0,
+      "latencyP50": 266,
+      "latencyP95": 606,
+      "avgInputTokensPerItem": 683,
+      "costPer1000ItemsUsd": 0.0287,
+      "errors": {
+        "hide → keep": 1,
+        "keep → hide": 2
+      }
+    }
+  },
+  "extra": {
+    "Trước: LLM phân loại": "hiện 25/51 post (precision 72%); ẩn nhầm 1/19 post đáng đọc; đúng trên post không phải tiếng Anh 11/12",
+    "Sau: Jev 4 câu hỏi + policy": "hiện 18/51 post (precision 94%); ẩn nhầm 2/19 post đáng đọc; đúng trên post không phải tiếng Anh 11/12"
+  }
+}
