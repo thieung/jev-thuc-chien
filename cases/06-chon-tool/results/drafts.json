@@ -1,0 +1,296 @@
+{
+  "v1: mô tả ngắn": {
+    "right": 7,
+    "total": 10,
+    "confident": 9,
+    "confidentRight": 7,
+    "rows": [
+      {
+        "msg": "Đơn #8812 của tôi giao chưa vậy?",
+        "expected": "lookup_order",
+        "choice": "lookup_order",
+        "confidence": 1,
+        "order_id_present": 0.99,
+        "latencyMs": 608,
+        "inputTokens": 473
+      },
+      {
+        "msg": "Phí ship ra Đà Nẵng bao nhiêu?",
+        "expected": "search_faq",
+        "choice": "search_faq",
+        "confidence": 1,
+        "order_id_present": 0.02,
+        "latencyMs": 779,
+        "inputTokens": 473
+      },
+      {
+        "msg": "Tôi sẽ kiện các người nếu không xử lý",
+        "expected": "handoff_human",
+        "choice": "handoff_human",
+        "confidence": 1,
+        "order_id_present": 0.02,
+        "latencyMs": 580,
+        "inputTokens": 470
+      },
+      {
+        "msg": "Hàng bị vỡ, tôi muốn trả lại lấy tiền",
+        "expected": "create_refund",
+        "choice": "lookup_order",
+        "confidence": 0.55,
+        "order_id_present": 0.02,
+        "latencyMs": 575,
+        "inputTokens": 473
+      },
+      {
+        "msg": "Áo size M mặc chật quá, cho em trả lại hoàn tiền nhé, đơn #9031",
+        "expected": "create_refund",
+        "choice": "lookup_order",
+        "confidence": 0.96,
+        "order_id_present": 0.99,
+        "latencyMs": 558,
+        "inputTokens": 484
+      },
+      {
+        "msg": "Shop có giao hàng vào chủ nhật không?",
+        "expected": "search_faq",
+        "choice": "search_faq",
+        "confidence": 1,
+        "order_id_present": 0.02,
+        "latencyMs": 579,
+        "inputTokens": 469
+      },
+      {
+        "msg": "Tại sao đơn 7720 vẫn đang ở kho vậy",
+        "expected": "lookup_order",
+        "choice": "lookup_order",
+        "confidence": 1,
+        "order_id_present": 0.97,
+        "latencyMs": 624,
+        "inputTokens": 475
+      },
+      {
+        "msg": "Nhân viên giao hàng thái độ quá tệ, tôi muốn gặp quản lý",
+        "expected": "handoff_human",
+        "choice": "handoff_human",
+        "confidence": 1,
+        "order_id_present": 0.02,
+        "latencyMs": 576,
+        "inputTokens": 476
+      },
+      {
+        "msg": "Tôi nhận được hàng nhưng thiếu 1 món, giờ muốn lấy lại tiền món đó",
+        "expected": "create_refund",
+        "choice": "lookup_order",
+        "confidence": 0.91,
+        "order_id_present": 0.02,
+        "latencyMs": 574,
+        "inputTokens": 478
+      },
+      {
+        "msg": "Có mã giảm giá cho khách mới không?",
+        "expected": "search_faq",
+        "choice": "search_faq",
+        "confidence": 0.99,
+        "order_id_present": 0.02,
+        "latencyMs": 573,
+        "inputTokens": 469
+      }
+    ]
+  },
+  "v2: create_refund có ví dụ": {
+    "right": 8,
+    "total": 10,
+    "confident": 8,
+    "confidentRight": 8,
+    "rows": [
+      {
+        "msg": "Đơn #8812 của tôi giao chưa vậy?",
+        "expected": "lookup_order",
+        "choice": "lookup_order",
+        "confidence": 1,
+        "order_id_present": 0.99,
+        "latencyMs": 370,
+        "inputTokens": 516
+      },
+      {
+        "msg": "Phí ship ra Đà Nẵng bao nhiêu?",
+        "expected": "search_faq",
+        "choice": "search_faq",
+        "confidence": 0.99,
+        "order_id_present": 0.02,
+        "latencyMs": 243,
+        "inputTokens": 516
+      },
+      {
+        "msg": "Tôi sẽ kiện các người nếu không xử lý",
+        "expected": "handoff_human",
+        "choice": "handoff_human",
+        "confidence": 1,
+        "order_id_present": 0.02,
+        "latencyMs": 375,
+        "inputTokens": 513
+      },
+      {
+        "msg": "Hàng bị vỡ, tôi muốn trả lại lấy tiền",
+        "expected": "create_refund",
+        "choice": "create_refund",
+        "confidence": 0.83,
+        "order_id_present": 0.02,
+        "latencyMs": 283,
+        "inputTokens": 516
+      },
+      {
+        "msg": "Áo size M mặc chật quá, cho em trả lại hoàn tiền nhé, đơn #9031",
+        "expected": "create_refund",
+        "choice": "lookup_order",
+        "confidence": 0.55,
+        "order_id_present": 0.99,
+        "latencyMs": 287,
+        "inputTokens": 527
+      },
+      {
+        "msg": "Shop có giao hàng vào chủ nhật không?",
+        "expected": "search_faq",
+        "choice": "search_faq",
+        "confidence": 1,
+        "order_id_present": 0.02,
+        "latencyMs": 367,
+        "inputTokens": 512
+      },
+      {
+        "msg": "Tại sao đơn 7720 vẫn đang ở kho vậy",
+        "expected": "lookup_order",
+        "choice": "lookup_order",
+        "confidence": 1,
+        "order_id_present": 0.98,
+        "latencyMs": 230,
+        "inputTokens": 518
+      },
+      {
+        "msg": "Nhân viên giao hàng thái độ quá tệ, tôi muốn gặp quản lý",
+        "expected": "handoff_human",
+        "choice": "handoff_human",
+        "confidence": 1,
+        "order_id_present": 0.02,
+        "latencyMs": 405,
+        "inputTokens": 519
+      },
+      {
+        "msg": "Tôi nhận được hàng nhưng thiếu 1 món, giờ muốn lấy lại tiền món đó",
+        "expected": "create_refund",
+        "choice": "lookup_order",
+        "confidence": 0.45,
+        "order_id_present": 0.02,
+        "latencyMs": 275,
+        "inputTokens": 521
+      },
+      {
+        "msg": "Có mã giảm giá cho khách mới không?",
+        "expected": "search_faq",
+        "choice": "search_faq",
+        "confidence": 0.99,
+        "order_id_present": 0.02,
+        "latencyMs": 252,
+        "inputTokens": 512
+      }
+    ]
+  },
+  "v3: lookup_order chỉ để xem trạng thái": {
+    "right": 10,
+    "total": 10,
+    "confident": 10,
+    "confidentRight": 10,
+    "rows": [
+      {
+        "msg": "Đơn #8812 của tôi giao chưa vậy?",
+        "expected": "lookup_order",
+        "choice": "lookup_order",
+        "confidence": 1,
+        "order_id_present": 0.99,
+        "latencyMs": 310,
+        "inputTokens": 538
+      },
+      {
+        "msg": "Phí ship ra Đà Nẵng bao nhiêu?",
+        "expected": "search_faq",
+        "choice": "search_faq",
+        "confidence": 1,
+        "order_id_present": 0.02,
+        "latencyMs": 310,
+        "inputTokens": 538
+      },
+      {
+        "msg": "Tôi sẽ kiện các người nếu không xử lý",
+        "expected": "handoff_human",
+        "choice": "handoff_human",
+        "confidence": 1,
+        "order_id_present": 0.02,
+        "latencyMs": 308,
+        "inputTokens": 535
+      },
+      {
+        "msg": "Hàng bị vỡ, tôi muốn trả lại lấy tiền",
+        "expected": "create_refund",
+        "choice": "create_refund",
+        "confidence": 1,
+        "order_id_present": 0.02,
+        "latencyMs": 310,
+        "inputTokens": 538
+      },
+      {
+        "msg": "Áo size M mặc chật quá, cho em trả lại hoàn tiền nhé, đơn #9031",
+        "expected": "create_refund",
+        "choice": "create_refund",
+        "confidence": 0.99,
+        "order_id_present": 0.99,
+        "latencyMs": 306,
+        "inputTokens": 549
+      },
+      {
+        "msg": "Shop có giao hàng vào chủ nhật không?",
+        "expected": "search_faq",
+        "choice": "search_faq",
+        "confidence": 1,
+        "order_id_present": 0.02,
+        "latencyMs": 305,
+        "inputTokens": 534
+      },
+      {
+        "msg": "Tại sao đơn 7720 vẫn đang ở kho vậy",
+        "expected": "lookup_order",
+        "choice": "lookup_order",
+        "confidence": 1,
+        "order_id_present": 0.98,
+        "latencyMs": 309,
+        "inputTokens": 540
+      },
+      {
+        "msg": "Nhân viên giao hàng thái độ quá tệ, tôi muốn gặp quản lý",
+        "expected": "handoff_human",
+        "choice": "handoff_human",
+        "confidence": 1,
+        "order_id_present": 0.02,
+        "latencyMs": 305,
+        "inputTokens": 541
+      },
+      {
+        "msg": "Tôi nhận được hàng nhưng thiếu 1 món, giờ muốn lấy lại tiền món đó",
+        "expected": "create_refund",
+        "choice": "create_refund",
+        "confidence": 0.99,
+        "order_id_present": 0.02,
+        "latencyMs": 308,
+        "inputTokens": 543
+      },
+      {
+        "msg": "Có mã giảm giá cho khách mới không?",
+        "expected": "search_faq",
+        "choice": "search_faq",
+        "confidence": 0.96,
+        "order_id_present": 0.02,
+        "latencyMs": 306,
+        "inputTokens": 534
+      }
+    ]
+  }
+}

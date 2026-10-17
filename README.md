@@ -1,7 +1,8 @@
 # Jev thực chiến: demo
 
-Script để tự chạy lại các thí nghiệm trong series "Jev thực chiến" với TypeSafe Jev (`jev-1.13.0`). Hiện repo có case của bài 01, 02, 03, 04 và 05; các case sau sẽ được thêm dần.
+Script để tự chạy lại các thí nghiệm trong series "Jev thực chiến" với TypeSafe Jev (`jev-1.13.0`). Hiện repo có case của bài 01, 02, 03, 04, 05 và 06; các case sau sẽ được thêm dần.
 
+- Bài 06, bản trực quan: https://sites.slopengineer.dev/jev-thuc-chien-06/
 - Bài 05, bản trực quan: https://sites.slopengineer.dev/jev-thuc-chien-05/
 - Bài 04, bản trực quan: https://sites.slopengineer.dev/jev-thuc-chien-04/
 - Bài 03, bản trực quan: https://sites.slopengineer.dev/jev-thuc-chien-03/
@@ -399,3 +400,51 @@ node lib/agent-baseline.mjs score cases/05-loc-bai-x --label="<tool>, <model>, <
 | `TYPESAFE_API_KEY is not set` hoặc `GEMINI_API_KEY is not set` | Export key trong cùng terminal. |
 | `unknown variant in --only` | Copy nguyên tên cách làm từ `case.mjs`, đặt trong dấu nháy kép. |
 | Số khác bài viết | Đúng như dự kiến: bài đo trên bộ post thật, repo chỉ có bộ tổng hợp, và bộ tổng hợp dễ hơn. So với bảng "Kết quả của tác giả trên bộ tổng hợp". |
+
+## Bài 06: chọn tool cho agent
+
+Agent hỗ trợ khách hàng có 4 tool: `lookup_order`, `create_refund`, `search_faq`, `handoff_human`. Thay vì để LLM sinh tool call, Jev trả lời một câu `choice` "tool nào nên gọi tiếp theo" (option là tên tool do code đưa vào) và một câu `noul` phụ `order_id_present`. Code đọc `confidence`: dưới 0,6 thì chuyển người thật, `create_refund` dưới 0,9 thì hỏi khách xác nhận, `lookup_order` không có số đơn thì hỏi lại. Số đơn lấy bằng regex, không hỏi Jev.
+
+`run.mjs` chạy 3 bản mô tả tool (v1, v2, v3) trên cùng 10 tin nhắn, chỉ đổi `criteria`. 10 tin nhắn do tác giả viết. Pattern "chọn trong danh sách do code liệt kê" lấy từ repo [browser-use/jev-ultrafast](https://github.com/browser-use/jev-ultrafast); phần browser agent không nằm trong repo này.
+
+### Cần có
+
+- Node.js 20 trở lên. Không có dependency, không cần `npm install`.
+- Key TypeSafe. Case này chỉ dùng Jev, không có cách làm LLM để so.
+
+### Chạy
+
+```bash
+git clone https://github.com/thieung/jev-thuc-chien.git && cd jev-thuc-chien
+export TYPESAFE_API_KEY=...
+
+node cases/06-chon-tool/run.mjs     # 3 bản × 10 tin nhắn = 30 request Jev, dưới $0,001
+```
+
+Kết quả ghi vào `cases/06-chon-tool/results/drafts.json`. Lần chạy của bạn sẽ ghi đè file này, nên dùng `git diff` để so, và `git checkout -- cases/06-chon-tool/results` để lấy lại bản gốc.
+
+Muốn thử với agent của bạn: thay `MESSAGES` bằng 20–30 tin nhắn thật có nhãn tool đúng, thay `BASE` bằng mô tả tool của bạn, rồi thêm các bản sửa như v2, v3.
+
+### Kết quả của tác giả
+
+Lần chạy ngày 11/10/2026 trên `jev-1.13.0` (bản đang nằm trong `results/`):
+
+| Bản | Đổi gì | Đúng | Confidence ≥ 0,6 / trong đó đúng | Ca sai |
+| --- | --- | --- | --- | --- |
+| v1 | Mô tả ngắn | 7/10 | 9 / 7 | 3 ca hoàn tiền thành `lookup_order`, 2 ca với confidence 0,91–0,96 |
+| v2 | `create_refund` liệt kê lý do hoàn tiền thật (vỡ, sai, thiếu, không vừa) kèm ví dụ | 8/10 | 8 / 8 | 2 ca hoàn tiền thành `lookup_order`, confidence 0,45–0,55 |
+| v3 | `lookup_order` thêm "NOT when they want a return or their money back, even if they give an order number" | 10/10 | 10 / 10 | Không có |
+
+- 30 request dùng 469–549 input token và 230–779 ms mỗi request, tổng khoảng 15.300 token (dưới $0,001).
+- Ở v2, 2 ca sai đều bị `lookup_order` hút về: một ca có số đơn (#9031), một ca không có. Sửa mô tả của option đang hút ca sai (v3) mới xử lý được cả hai.
+- v3 được chỉnh trên chính 10 tin này, nên 10/10 là con số lạc quan. Hãy kiểm lại trên một bộ tin nhắn khác.
+
+Jev không cam kết trả cùng một số ở mọi lần chạy.
+
+### Lỗi thường gặp
+
+| Lỗi | Cách sửa |
+| --- | --- |
+| `TYPESAFE_API_KEY is not set` | Export key trong cùng terminal. |
+| Dòng kết quả in `undefined` thay vì tên tool và confidence | Request đó bị lỗi (key sai, hết quota, timeout) nên không có `answers`, và bị tính là sai. Kiểm tra key rồi chạy lại. |
+| Số khác bảng trên vài phần trăm confidence | Bình thường giữa các lần chạy. So số ca đúng và ca sai mà tự tin, không so từng con số. |
